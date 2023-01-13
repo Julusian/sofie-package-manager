@@ -20,31 +20,32 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Run build
-        run: yarn do:build-win32
-        env:
-          CI: true
+      # - name: Run build
+      #   run: yarn do:build-win32
+      #   env:
+      #     CI: true
 
-      - name: sign executables
-        shell: bash
-        continue-on-error: true
-        env:
-          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
-        run: |
-          if [[ ! -z "$WINDOWS_CERTIFICATE" ]]; then
-            # write certficate to file
-            echo "$WINDOWS_CERTIFICATE" | base64 -d > certificate.pfx
+      # - name: sign executables
+      #   shell: bash
+      #   continue-on-error: true
+      #   env:
+      #     WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+      #   run: |
+      #     if [[ ! -z "$WINDOWS_CERTIFICATE" ]]; then
+      #       # write certficate to file
+      #       echo "$WINDOWS_CERTIFICATE" | base64 -d > certificate.pfx
 
-            for FILE in deploy/*; do 
-              'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign //fd SHA256 //f certificate.pfx //p "${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}" $FILE
-              echo $FILE
-            done
-          else
-            echo "No certificate found"
-          fi
+      #       for FILE in deploy/*; do
+      #         'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign //fd SHA256 //f certificate.pfx //p "${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}" $FILE
+      #         echo $FILE
+      #       done
+      #     else
+      #       echo "No certificate found"
+      #     fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: Windows
-          path: deploy
+          # path: deploy
+          path: scripts
