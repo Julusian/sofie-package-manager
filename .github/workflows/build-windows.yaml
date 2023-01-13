@@ -3,8 +3,11 @@ name: Build Windows
 on:
   workflow_dispatch:
   push:
-    # tags:
-    #   - 'v*.*.*'
+    branches:
+      - master
+      - 'release**'
+    tags:
+      - 'v**'
 
 jobs:
   build:
@@ -65,9 +68,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: Windows
+          path: deploy
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: scripts/*
+          files: deploy/*
           fail_on_unmatched_files: true
