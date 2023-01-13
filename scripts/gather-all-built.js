@@ -5,9 +5,9 @@ const mkdirp = require('mkdirp')
 const path = require('path')
 // const rimraf = promisify(require('rimraf'))
 
-const fseCopy = promisify(fse.copy)
-const fseReaddir = promisify(fse.readdir)
-const fseUnlink = promisify(fse.unlink)
+const fseCopy = fse.copy
+const fseReaddir = fse.readdir
+const fseUnlink = fse.unlink
 
 /*
 This script gathers all files in the deploy/ folders of the various apps

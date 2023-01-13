@@ -11,7 +11,7 @@ const fse = require('fs-extra')
 const mkdirp = require('mkdirp')
 const rimraf = promisify(require('rimraf'))
 
-const fseCopy = promisify(fse.copy)
+const fseCopy = fse.copy
 
 /*
 	Due to nexe not taking into account the packages in the mono-repo, we're doing a hack,
@@ -26,7 +26,6 @@ const packageJson = require(path.join(basePath, '/package.json'))
 // }
 
 ;(async () => {
-
 	log(`Collecting dependencies for ${packageJson.name}...`)
 	// List all Lerna packages:
 	const list = await exec('yarn lerna list -a --json')

@@ -29,14 +29,15 @@
         "typecheck:changed": "lerna exec --since origin/master --include-dependents -- tsc --noEmit",
         "build-win32": "node scripts/prepare-for-build32.js && lerna run build-win32 --stream && node scripts/cleanup-after-build32.js",
         "gather-built": "node scripts/gather-all-built.js",
-        "sign-executables": "node scripts/sign-executables.js",
+        "sign-executables": "node scripts/sign-executables.mjs",
         "start:http-server": "lerna run start --stream --scope @http-server/app",
         "start:workforce": "lerna run start --stream --scope @workforce/app",
         "start:package-manager": "lerna run start --stream --scope @package-manager/app",
         "start:worker": "lerna run start --stream --scope @worker/app",
         "start:single-app": "lerna run start --stream --scope @single-app/app",
         "postinstall": "node scripts/update-packages.js",
-        "do:build-win32": "yarn install && yarn build && yarn build-win32 && yarn gather-built && yarn sign-executables"
+        "do:build-win32": "yarn install && yarn build && yarn build-win32 && yarn gather-built",
+        "precommit": "lint-staged"
     },
     "devDependencies": {
         "@sofie-automation/code-standard-preset": "^2.0.2",
@@ -72,8 +73,16 @@
     "husky": {
         "hooks": {
             "pre-commit": [
-                "node scripts/update-packages.js && lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
+                "node scripts/update-packages.js && yarn precommit"
             ]
         }
+    },
+    "lint-staged": {
+        "*.{js,css,json,md,scss,yml,yaml}": [
+            "prettier"
+        ],
+        "*.{ts,tsx}": [
+            "eslint"
+        ]
     }
 }
