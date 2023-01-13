@@ -69,4 +69,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: deploy/*
+          files: scripts/*
+          fail_on_unmatched_files: true
