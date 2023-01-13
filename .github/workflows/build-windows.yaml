@@ -61,10 +61,10 @@ jobs:
       contents: write
 
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: Windows
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Windows
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
